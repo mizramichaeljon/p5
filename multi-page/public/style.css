@@ -1,0 +1,37 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    background-color:beige;
+}
+
+canvas {
+    display: block;
+}
+
+h1.title{
+    font-size:40px;
+    text-align: center;
+    font-weight: bold;
+    color: darkkhaki;
+    font-family:Arial, Helvetica, sans-serif;
+}
+p.paragraph{
+    font-size: size 20px;
+    text-align: center;
+    font-weight:lighter;
+}
+.container{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    height:10;
+
+}
+/* #canvas-element-1{
+    margin: 0 auto
+}
+
+#canvas-element-2{
+    margin: 0 auto
+} */
