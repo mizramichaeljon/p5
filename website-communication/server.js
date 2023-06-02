@@ -7,7 +7,9 @@ const pinWebsitePort = 4000;
 let imageData;  // global variable to hold the image data
 let savedImage;
 // Middleware to parse JSON request body
-app.use(express.json());
+
+app.use(express.json({ limit: '50mb' }));
+
 
 // Enable CORS for all routes
 app.use(cors());

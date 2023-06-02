@@ -1,27 +1,40 @@
-body{
-    margin: 0;
-    border: 0;
+body {
+  margin: 0;
+  border: 0;
 }
 
-.title-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.title-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .pin-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 10%; /* Adjust the height as needed */
-  }
-  
-  #pin-board {
-    width: 0%; /* Adjust the width as needed */
-    /* height:10%; */
-    max-width: 800px; /* Adjust the maximum width as needed */
-  }
-  
-  .pin-container h1 {
-    text-align: center;
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 10%; /* Adjust the height as needed */
+}
+
+.pin-container h1 {
+  text-align: left;
+  margin-bottom: 10px; /* Add margin bottom to create space between h1 and pin-board */
+}
+
+#pin-board {
+  width: 400px;
+  height: 400px;
+  max-width: 400px; /* Set the maximum width to match the desired size */
+  max-height: 400px; /* Set the maximum height to match the desired size */
+  border: none; /* Initially hide the border */
+}
+
+#pin-board img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+#pin-board img.loaded {
+  border: 1px solid black; /* Show the border when the image is loaded */
+}

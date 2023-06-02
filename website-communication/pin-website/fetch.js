@@ -16,11 +16,14 @@ function fetchDrawing() {
       if (data.image) {
         // Clear the pin board
         pinBoard.innerHTML = '';
-        
+
         const imgElement = document.createElement('img');
+        imgElement.onload = function() {
+          imgElement.classList.add('loaded');
+        };
         imgElement.src = data.image;
         pinBoard.appendChild(imgElement);
-  
+
         console.log('Drawing fetched and added to pin board');
       } else {
         // Handle the case when there's no image data
