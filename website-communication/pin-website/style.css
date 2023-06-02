@@ -8,3 +8,20 @@ body{
     justify-content: center;
     align-items: center;
 }
+
+.pin-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10%; /* Adjust the height as needed */
+  }
+  
+  #pin-board {
+    width: 0%; /* Adjust the width as needed */
+    /* height:10%; */
+    max-width: 800px; /* Adjust the maximum width as needed */
+  }
+  
+  .pin-container h1 {
+    text-align: center;
+  }
