@@ -13,8 +13,9 @@ canvas {
   justify-content: center;
 }
 
-.container {
+#title-container {
   display: flex;
   text-align: center;
   justify-content: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
