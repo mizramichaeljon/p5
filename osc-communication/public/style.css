@@ -7,13 +7,13 @@ body {
   padding: 0;
 }
 
-canvas {
+.canvas-container {
   display: flex;
   text-align: center;
   justify-content: center;
 }
 
-#title-container {
+.title-container {
   display: flex;
   text-align: center;
   justify-content: center;
