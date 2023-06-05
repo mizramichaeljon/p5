@@ -1,8 +1,20 @@
-html, body {
-    margin: 0;
-    padding: 0;
-  }
-  canvas {
-    display: block;
-  }
-  
+html,
+body {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+canvas {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+
+.container {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
