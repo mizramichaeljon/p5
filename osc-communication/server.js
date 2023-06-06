@@ -1,50 +1,41 @@
 const express = require('express');
-const http = require('http');
-const WebSocket = require('ws');
-const osc = require('osc-js');
+const { Server } = require('ws');
+const OSC = require('osc-js');
+const dgram = require('dgram');
+
 const app = express();
-const port = 3000; // Choose a port number of your choice
+const wss = new Server({ port: 8081 });
 
-// Define a route to serve your website files
+const config = { 
+  udpClient: { 
+    host: 'localhost',
+    port: 57121
+  } 
+};
 
-//osc-communication will be the web-address 
-app.use('/osc-communication',express.static('public'));
+const osc = new OSC({ plugin: new OSC.BridgePlugin(config) });
 
-
-// Define routes for specific HTML pages
-app.get('/osc-communication/second-page', (req, res) => {
-  res.sendFile(__dirname + '/public/second-page.html');
+osc.on('error', error => {
+  console.error('An error occurred:', error);
 });
 
-// Start the server
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
-
-// Create an HTTP server
-const server = http.createServer(app);
-
-// Listen on port 8000
-server.listen(8000, () => {
-  console.log('Server listening on port 8000');
-});
-
-// Create a WebSocket server
-const wss = new WebSocket.Server({
-  server: server
-});
-
-wss.on('connection', (ws) => {
-  const oscPlugin = new osc.WebsocketServerPlugin();
-
-  oscPlugin.open();
-
-  ws.on('message', (msg) => {
-    const oscMsg = oscPlugin.parseBuffer(new Uint8Array(msg));
-    oscPlugin.send(oscMsg, { host: 'localhost', port: 57121 });
+wss.on('connection', ws => {
+  ws.on('message', msg => {
+    const data = JSON.parse(msg);
+    const oscMessage = new OSC.Message(data.address);
+    data.args.forEach(arg => oscMessage.add(arg.value, arg.type));
+    
+    const udpClient = dgram.createSocket('udp4');
+    udpClient.send(Buffer.from(oscMessage.pack()), config.udpClient.port, config.udpClient.host, err => {
+      if (err) console.error('Error sending UDP message:', err);
+      udpClient.close();
+    });
   });
 
   ws.on('close', () => {
-    oscPlugin.close();
+    osc.close();
   });
 });
+
+app.use(express.static('public'));
+app.listen(3000, () => console.log(`Server is running on http://localhost:3000`));

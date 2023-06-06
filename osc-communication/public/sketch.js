@@ -1,10 +1,11 @@
 let socket;
 
 function setup() {
-  let canvas = createCanvas(400, 400);
-  canvas.parent('canvas');
-  // Set up a WebSocket connection to our server
-  socket = new WebSocket('ws://localhost:8000');
+  createCanvas(400, 400).parent('canvas');
+  socket = new WebSocket('ws://localhost:8081');
+  
+  socket.onopen = () => console.log('Connected to WebSocket');
+  socket.onclose = () => console.log('Disconnected from WebSocket');
 }
 
 function draw() {
@@ -12,12 +13,14 @@ function draw() {
 }
 
 function mousePressed() {
-  // Define an OSC message
-  const oscMessage = new Message('/test', mouseX, mouseY);
-
-  // Convert OSC message to a Uint8Array (binary data)
-  const binaryOscMessage = osc.writePacket(oscMessage);
-
-  // Send OSC message over WebSocket
-  socket.send(binaryOscMessage.buffer, { binary: true });
+  if (socket.readyState === WebSocket.OPEN) {
+    const message = {
+      address: '/test',
+      args: [
+        { type: 'f', value: mouseX },
+        { type: 'f', value: mouseY }
+      ]
+    };
+    socket.send(JSON.stringify(message));
+  }
 }
